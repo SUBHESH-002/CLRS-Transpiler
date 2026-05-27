@@ -1,0 +1,8 @@
+procedure EUCLID(a, b)
+repeat
+r = a - b * (a / b)
+a = b
+b = r
+until b == 0
+return a
+end

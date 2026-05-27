@@ -1,0 +1,24 @@
+- [x] Setup Transpiler Grammar (clrs.lark)
+    - [x] Define assignment syntax (arrow and equals)
+    - [x] Define loops (for and while)
+    - [x] Include conditional branching (`if`, `elseif/else if`, `else`)
+- [x] Implement Transpiler Python Logic (transpiler.py)
+    - [x] Implement `CLRSIndenter` class mapping Python Indent blocks
+    - [x] Implement robust AST Dataclass generation
+    - [x] Implement transformer logic mapping parsed tree nodes statically
+    - [x] Implement Python Code Generator visiting expressions with conversion logic
+- [x] Support Indexing shift arrays `A[i]` to `0-indexed` dynamically.
+- [x] Integrate full translation function and script orchestrator
+- [x] Install dependcies `pip install lark`
+- [x] Verify test cases (arrays and conditional tree structures)
+- [x] Version 4 - Basic Mapping System & Universal Types
+    - [x] Create version 4 `v4` workspace
+    - [x] Map pseudocode numbers to C++ `int` and `double`
+    - [x] Map arrays `A[i]` or capitalized identifiers to `std::vector<int>&`
+    - [x] Setup implicit Array assumptions adding capitalized undefined vars as reference parameters
+    - [x] Map `A.length` to `A.size()` in generated C++ code
+- [x] Snippet Bugfixes (`v4`)
+    - [x] Add unary `-` support to `clrs.lark` to parse negative numbers (e.g. `return -1`)
+    - [x] Update Semantic analyzer to auto-define top-level raw variables/arrays to support standalone snippets without `SemanticError`
+    - [x] Prevent `j-1` from being parsed as hyphenated identifier `j_1` in `clrs.lark`
+    - [x] Refactor AST nested expression syntax mapping to prevent excessive bracket generations (e.g., yielding `A[(j - 1) - 1]` instead of `A[((j - 1)) - 1]`)

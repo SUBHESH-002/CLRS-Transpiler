@@ -1,0 +1,70 @@
+start: (statement_or_nl | procedure_stmt)*
+?statement_or_nl: statement | _NL
+?statement: assignment_stmt | compound_stmt | proc_call_stmt | return_stmt | exchange_stmt | error_stmt
+
+?compound_stmt: for_stmt | while_stmt | repeat_stmt | if_stmt
+
+procedure_stmt: "procedure" IDENT "(" [IDENT ("," IDENT)*] ")" _NL block "end" -> procedure
+
+assignment_stmt: assignable ASSIGN_OP expr -> assign
+?assignable: IDENT -> var
+           | array_access
+           | attr_access
+
+for_stmt: "for" IDENT "=" expr direction expr ("do" | _NL "do")? block "end" -> for_loop
+?direction: "to" -> to_dir | "downto" -> downto_dir
+
+while_stmt: "while" expr ("do" | _NL "do")? block "end" -> while_loop
+repeat_stmt: "repeat" block "until" expr -> repeat_loop
+error_stmt: "error" STRING -> error_kw
+exchange_stmt: assignable EXCHANGE_OP assignable -> exchange
+
+if_stmt: "if" expr ("then" | _NL "then")? block elseif_stmt* else_stmt? "end"
+elseif_stmt: ("elseif" | "else if") expr ("then" | _NL "then")? block -> elseif_node
+else_stmt: ("else" | _NL "else") block -> else_node
+
+proc_call_stmt: proc_call_expr
+proc_call_expr: IDENT "(" [expr ("," expr)*] ")" -> proc_call
+return_stmt: "return" expr? -> return_kw
+
+block: statement_or_nl+
+
+?expr: logic_or
+?logic_or: logic_and (OR_OP logic_and)* -> bin_op
+?logic_and: comparison (AND_OP comparison)* -> bin_op
+?comparison: term (COMP_OP term)* -> bin_op
+?term: factor (ADD_OP factor)* -> bin_op
+?factor: power (MUL_OP factor)* -> bin_op
+       | ADD_OP factor -> unary_op
+?power: atom (POW_OP atom)* -> bin_op
+?atom: proc_call_expr
+     | IDENT -> var
+     | NUMBER -> number
+     | array_access
+     | attr_access
+     | "(" expr ")"
+     | "nil" -> nil_kw
+     | "True" -> true_kw
+     | "False" -> false_kw
+
+array_access: IDENT "[" expr "]"
+attr_access: IDENT "." IDENT -> attr_access
+
+OR_OP: "or"
+AND_OP: "and"
+COMP_OP.2: "<" | ">" | "==" | "!=" | "<=" | ">=" | "\u2264" | "\u2265" | "\u2260"
+ADD_OP: "+" | "-"
+MUL_OP: "*" | "/"
+POW_OP: "^"
+ASSIGN_OP.2: "=" | "\u2190" | "<-"
+EXCHANGE_OP.3: "<->" | "\u2194"
+
+_NL: ( /\r?\n[\t ]*/ | COMMENT )+
+COMMENT: /\/\/.*/
+
+%import common.NUMBER
+%import common.ESCAPED_STRING -> STRING
+%import common.WS_INLINE
+%ignore WS_INLINE
+
+IDENT: /[a-zA-Z_][a-zA-Z0-9_]*(-[a-zA-Z_][a-zA-Z0-9_]*)*/

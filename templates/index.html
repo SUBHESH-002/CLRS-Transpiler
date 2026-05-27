@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLRS to Python Transpiler</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- ACE Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <h1>CLRS Transpiler</h1>
+        <div class="status" id="status">Ready</div>
+    </div>
+    
+    <div class="container">
+        <div class="pane">
+            <div class="pane-header">Pseudo code</div>
+            <div id="editor-left" class="editor"></div>
+        </div>
+        <div class="divider"></div>
+        <div class="pane">
+            <div class="pane-header">Python code</div>
+            <div id="editor-right" class="editor"></div>
+        </div>
+    </div>
+
+    <script src="/static/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+start: statement_or_nl*
+?statement_or_nl: statement | _NL
+statement: assignment_stmt | compound_stmt | proc_call_stmt | return_stmt
+
+compound_stmt: for_stmt | while_stmt | if_stmt
+
+assignment_stmt: assignable ASSIGN_OP expr -> assign
+?assignable: CNAME -> var
+           | array_access
+
+// Blocks now end with an explicit 'end' keyword instead of indentation
+for_stmt: "for" CNAME "=" expr direction expr ("do")? _NL block "end" -> for_loop
+?direction: "to" -> to_dir | "downto" -> downto_dir
+
+while_stmt: "while" expr ("do")? _NL block "end" -> while_loop
+
+if_stmt: "if" expr ("then")? _NL block elseif_stmt* else_stmt? "end" -> if_node
+elseif_stmt: ("elseif" | "else if") expr ("then")? _NL block -> elseif_node
+else_stmt: "else" _NL block -> else_node
+
+proc_call_stmt: proc_call_expr
+proc_call_expr: CNAME "(" [expr ("," expr)*] ")" -> proc_call
+return_stmt: "return" expr? -> return_kw
+
+block: statement_or_nl+
+
+?expr: logic_or
+?logic_or: logic_and (OR_OP logic_and)* -> bin_op
+?logic_and: comparison (AND_OP comparison)* -> bin_op
+?comparison: term (COMP_OP term)* -> bin_op
+?term: factor (ADD_OP factor)* -> bin_op
+?factor: power (MUL_OP power)* -> bin_op
+?power: atom (POW_OP atom)* -> bin_op
+?atom: proc_call_expr
+     | CNAME -> var
+     | NUMBER -> number
+     | array_access
+     | "(" expr ")"
+     | "nil" -> nil_kw
+     | "True" -> true_kw
+     | "False" -> false_kw
+
+array_access: CNAME "[" expr "]"
+
+OR_OP: "or"
+AND_OP: "and"
+COMP_OP: "<" | ">" | "==" | "!=" | "<=" | ">=" | "\u2264" | "\u2265" | "\u2260"
+ADD_OP: "+" | "-"
+MUL_OP: "*" | "/"
+POW_OP: "^"
+ASSIGN_OP.2: "=" | "\u2190" | "<-"
+
+_NL: ( /\r?\n[\t ]*/ | COMMENT )+
+COMMENT: /\/\/.*/
+
+%import common.CNAME
+%import common.NUMBER
+%import common.WS_INLINE
+%ignore WS_INLINE

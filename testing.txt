@@ -1,0 +1,107 @@
+pseudo:
+i = 5
+j = 2
+A[i + j] = A[i * j - 1] + 10
+
+python:
+i = 5
+j = 2
+A[((i + j)) - 1] = (A[(((i * j) - 1)) - 1] + 10)
+
+pseudo:
+for i = n downto 1
+    A[i] = A[i] * 2
+    if A[i] > 100
+        return i
+
+python:
+for i in range(n, (1) - 1, -1):
+    A[i - 1] = (A[i - 1] * 2)
+    if (A[i - 1] > 100):
+        return i
+
+pseudo:
+for i = 1 to n - 1
+    min = i
+    for j = i + 1 to n
+        if A[j] < A[min]
+            min = j
+    temp = A[i]
+    A[i] = A[min]
+    A[min] = temp
+
+python:
+for i in range(1, ((n - 1)) + 1):
+    min = i
+    for j in range((i + 1), (n) + 1):
+        if (A[j - 1] < A[min - 1]):
+            min = j
+    temp = A[i - 1]
+    A[i - 1] = A[min - 1]
+    A[min - 1] = temp
+
+pseudo:
+x ← 10
+y ← 20
+if x ≤ y and x ≠ 0
+    A[x] = y
+else
+    A[y] = x
+
+python:
+SYSTEM ERROR:
+Traceback (most recent call last):
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 124, in _call_userfunc
+    return f(children)
+           ^^^^^^^^^^^
+  File "O:PROJECTSTranspiler	ranspiler.py", line 173, in else_node
+    setattr(bd, '__is_else_block', True)
+AttributeError: 'list' object has no attribute '__is_else_block'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "app_nicegui.py", line 22, in handle_transpile
+    result = transpiler.translate(source)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "O:PROJECTSTranspiler	ranspiler.py", line 308, in translate
+    ast = transformer.transform(tree)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 161, in transform
+    res = list(self._transform_children([tree]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 146, in _transform_children
+    res = self._transform_tree(c)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 156, in _transform_tree
+    children = list(self._transform_children(tree.children))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 146, in _transform_children
+    res = self._transform_tree(c)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 156, in _transform_tree
+    children = list(self._transform_children(tree.children))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 146, in _transform_children
+    res = self._transform_tree(c)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 156, in _transform_tree
+    children = list(self._transform_children(tree.children))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 146, in _transform_children
+    res = self._transform_tree(c)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 156, in _transform_tree
+    children = list(self._transform_children(tree.children))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 146, in _transform_children
+    res = self._transform_tree(c)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 157, in _transform_tree
+    return self._call_userfunc(tree, children)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:UserssubheAppDataLocalPackagesPythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0LocalCachelocal-packagesPython311site-packageslarkisitors.py", line 128, in _call_userfunc
+    raise VisitError(tree.data, tree, e)
+lark.exceptions.VisitError: Error trying to process rule "else_node":
+
+'list' object has no attribute '__is_else_block'
